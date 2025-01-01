@@ -51,7 +51,7 @@ async def edit_traffic(v2_user, size, unit='GB'):
 async def can_games(v2_user, bot_user):
     traffic = await get_traffic(v2_user)
     if traffic < bot_user.betting:
-        return f'你的流量已不足{bot_user.betting}GB，无法进行游戏'
+        return f'阿祖，收手吧！你的流量已不足{bot_user.betting}GB，无法进行游戏'
     else:
         return True
 

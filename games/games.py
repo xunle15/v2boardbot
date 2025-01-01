@@ -23,7 +23,7 @@ async def is_forward(update: Update, context: ContextTypes.DEFAULT_TYPE, v2_user
 async def can_games(v2_user, bot_user):
     traffic = await get_traffic(v2_user)
     if traffic < bot_user.betting:
-        return f'你的流量已不足{bot_user.betting}GB，无法进行游戏'
+        return f'阿祖，收手吧！你的流量已不足{bot_user.betting}GB，无法进行游戏'
     else:
         return True
 
@@ -47,7 +47,7 @@ async def tiger(update: Update, context: ContextTypes.DEFAULT_TYPE, v2_user, bot
         await asyncio.sleep(0.8)
         if update.message.dice.value in [1, 22, 43, 64]:
             # 中奖
-            result = f'恭喜你中奖了，获得{rate}GB流量已经存入你的账户\n当前账户流量：{await edit_traffic(v2_user, rate)}GB'
+            result = f'哇塞！中奖了，获得{rate}GB流量已经存入你的账户\n当前账户流量：{await edit_traffic(v2_user, rate)}GB'
         else:
             # 没中奖
             result = f'很遗憾你没有中奖，流量已从你账户扣除{bot_user.betting}GB\n当前账户流量：{traffic}GB'
@@ -80,7 +80,7 @@ async def dice_(update: Update, context: ContextTypes.DEFAULT_TYPE, v2_user, bot
         await asyncio.sleep(3.5)
         if user > bot:
             # 中奖
-            result = f'恭喜你中奖了，获得{rate}GB流量已经存入你的账户\n当前账户流量：{await edit_traffic(v2_user, rate)}GB'
+            result = f'哇塞！中奖了，获得{rate}GB流量已经存入你的账户\n当前账户流量：{await edit_traffic(v2_user, rate)}GB'
         elif user == bot:
             # 平局
             traffic = await edit_traffic(v2_user, bot_user.betting)
@@ -112,7 +112,7 @@ async def basketball(update: Update, context: ContextTypes.DEFAULT_TYPE, v2_user
             add_rate = (update.message.dice.value - 4) * 0.5
             rate = (add_rate + config.BASKETBALL.rate) * bot_user.betting
             # 中奖
-            result = f'恭喜你中奖了，获得{rate}GB流量已经存入你的账户\n当前账户流量：{await edit_traffic(v2_user, rate)}GB'
+            result = f'哇塞！中奖了，获得{rate}GB流量已经存入你的账户\n当前账户流量：{await edit_traffic(v2_user, rate)}GB'
         else:
             # 没中奖
             result = f'很遗憾你没有中奖，流量已从你账户扣除{bot_user.betting}GB\n当前账户流量：{traffic}GB'
@@ -140,7 +140,7 @@ async def football(update: Update, context: ContextTypes.DEFAULT_TYPE, v2_user, 
             add_rate = (update.message.dice.value - 4) * 0.5
             rate = (add_rate + config.FOOTBALL.rate) * bot_user.betting
             # 中奖
-            result = f'恭喜你中奖了，获得{rate}GB流量已经存入你的账户\n当前账户流量：{await edit_traffic(v2_user, rate)}GB'
+            result = f'哇塞！中奖了，获得{rate}GB流量已经存入你的账户\n当前账户流量：{await edit_traffic(v2_user, rate)}GB'
         else:
             # 没中奖
             result = f'很遗憾你没有中奖，流量已从你账户扣除{bot_user.betting}GB\n当前账户流量：{traffic}GB'
@@ -168,7 +168,7 @@ async def bullseye(update: Update, context: ContextTypes.DEFAULT_TYPE, v2_user, 
             add_rate = (update.message.dice.value - 2) * 0.1
             rate = (add_rate + config.BULLSEYE.rate) * bot_user.betting
             # 中奖
-            result = f'恭喜你中奖了，获得{round(rate, 2)}GB流量已经存入你的账户\n当前账户流量：{await edit_traffic(v2_user, rate)}GB'
+            result = f'哇塞！中奖了，获得{round(rate, 2)}GB流量已经存入你的账户\n当前账户流量：{await edit_traffic(v2_user, rate)}GB'
         else:
             # 没中奖
             result = f'很遗憾你没有中奖，流量已从你账户扣除{bot_user.betting}GB\n当前账户流量：{traffic}GB'
@@ -195,7 +195,7 @@ async def bowling(update: Update, context: ContextTypes.DEFAULT_TYPE, v2_user, b
             add_rate = (update.message.dice.value - 2) * 0.1
             rate = (add_rate + config.BOWLING.rate) * bot_user.betting
             # 中奖
-            result = f'恭喜你中奖了，获得{round(rate, 2)}GB流量已经存入你的账户\n当前账户流量：{await edit_traffic(v2_user, rate)}GB'
+            result = f'哇塞！中奖了，获得{round(rate, 2)}GB流量已经存入你的账户\n当前账户流量：{await edit_traffic(v2_user, rate)}GB'
         else:
             # 没中奖
             result = f'很遗憾你没有中奖，流量已从你账户扣除{bot_user.betting}GB\n当前账户流量：{traffic}GB'
@@ -216,7 +216,7 @@ async def quit_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return START_ROUTES
     bot_user.is_game = False
     bot_user.save()
-    await update.message.reply_text('已退出赌博模式。', reply_markup=reply_markup)
+    await update.message.reply_text('阿祖已经收手，外面都是老虎机！', reply_markup=reply_markup)
     return START_ROUTES
 
 
@@ -232,7 +232,7 @@ async def select_flow(update: Update, context: ContextTypes.DEFAULT_TYPE):
         query = update
 
     if betting == 'xGB':
-        await query.message.reply_text(text=f'请发送你要下注的流量，单位：GB')
+        await query.message.reply_text(text=f'阿祖，请发送你要下注的流量，单位：GB')
         return 'input_betting'
     bot_user = BotUser.select().where(BotUser.telegram_id == telegram_id).first()
     bot_user.betting = int(betting.replace('GB', ''))
