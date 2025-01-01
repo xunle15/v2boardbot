@@ -23,7 +23,7 @@ start_keyboard = [
     ],
     [
         InlineKeyboardButton(text='寻乐互联，即刻连接',
-                             url='https:cloud.xunle.de')
+                             url='https://cloud.xunle.de')
     ]
 ]
 keyboard_admin = [
