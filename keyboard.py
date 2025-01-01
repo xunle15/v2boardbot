@@ -22,8 +22,8 @@ start_keyboard = [
         InlineKeyboardButton(text='🎲适当娱乐', callback_data='dice'),
     ],
     [
-        InlineKeyboardButton(text='Ver:20230924.1 main',
-                             url='')
+        InlineKeyboardButton(text='寻乐互联，即刻连接',
+                             url='https:cloud.xunle.de')
     ]
 ]
 keyboard_admin = [
