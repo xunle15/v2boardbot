@@ -27,36 +27,60 @@ async def command_checkin(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 # 绑定
 async def command_bind(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    # http://172.16.1.14/api/v1/client/subscribe?token=b9bc3bee61de39f04047dbf8dca12e97
+    # 打印用户数据
     print(context.user_data)
+    
+    # 定义键盘
     keyboard = [
         return_keyboard,
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
+    
+    # 检查是否为私聊
     if update.message.chat.type != 'private':
         text = '绑定用户仅限私聊使用，请私聊机器人'
         await update.message.reply_text(text=text, reply_markup=reply_markup)
         return START_ROUTES
     else:
         try:
+            # 获取token
             token = context.args[0].split('token=/')[-1]
         except:
             text = '参数错误，请发送"/bind 订阅链接"'
             await update.message.reply_text(text=text, reply_markup=reply_markup)
             return START_ROUTES
+    
+    # 调用 _bind 进行绑定操作
     text = _bind(token, update.effective_user.id)
+    
     if text == '绑定成功':
+        # 获取用户的 chat_id, user_id 和 verify_type
         chat_id = context.user_data['chat_id']
         user_id = context.user_data['user_id']
         verify_type = context.user_data['verify_type']
+        
+        # 如果 verify_type 是 'prohibition'，则限制用户发送消息
         if verify_type == 'prohibition':
             permissions = ChatPermissions(can_send_messages=True, can_send_media_messages=True,
                                           can_send_other_messages=True)
             await context.bot.restrict_chat_member(chat_id=chat_id, user_id=user_id, permissions=permissions)
+        # 如果 verify_type 是 'out'，解除禁言
         elif verify_type == 'out':
             await context.bot.unban_chat_member(chat_id=chat_id, user_id=user_id, only_if_banned=True)
+        
+        # 设置绑定成功的消息
+        text = "绑定成功！\n\n你的账户已经绑定，欢迎使用寻乐云Bot服务！"
+    
+    else:
+        # 如果绑定失败，返回失败原因
+        text = f"绑定失败：{text}"
+
+    # 发送消息
     await update.message.reply_text(text=text, reply_markup=reply_markup)
+    
+    # 返回到初始路由
     return START_ROUTES
+
 
 
 # 解绑
