@@ -52,7 +52,8 @@ async def command_bind(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     # 调用 _bind 进行绑定操作
     text = _bind(token, update.effective_user.id)
-    
+     # 打印 _bind 返回的内容，帮助调试
+        print(f"_bind 返回的内容: {text}")
     if text == '绑定成功':
         # 获取用户的 chat_id, user_id 和 verify_type
         chat_id = context.user_data['chat_id']
