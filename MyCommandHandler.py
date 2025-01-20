@@ -39,7 +39,7 @@ async def command_bind(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return START_ROUTES
     else:
         try:
-            token = context.args[0].split('token=')[-1]
+            token = context.args[0].split('token=/')[-1]
         except:
             text = '参数错误，请发送"/bind 订阅链接"'
             await update.message.reply_text(text=text, reply_markup=reply_markup)

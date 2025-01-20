@@ -162,7 +162,7 @@ def _mysub(telegram_id):
     if not v2_user:
         return '未绑定,请先绑定'
     suburl = config.WEBSITE.suburl if hasattr(config.WEBSITE, 'suburl') else config.WEBSITE.url
-    return f'您的订阅链接:{suburl}/api/v1/client/subscribe?token={v2_user.token}'
+    return f'您的订阅链接:{suburl}/s/token=/{v2_user.token}'
 
 
 def _lucky(telegram_id):
