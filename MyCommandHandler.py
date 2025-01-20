@@ -30,6 +30,13 @@ async def command_bind(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # 打印用户数据
     print(context.user_data)
     
+    # 确保 chat_id 和其他相关字段在 user_data 中
+    if 'chat_id' not in context.user_data:
+        # 如果没有 chat_id，则初始化
+        context.user_data['chat_id'] = update.message.chat.id  # 使用 chat.id 作为 chat_id
+    if 'user_id' not in context.user_data:
+        context.user_data['user_id'] = update.effective_user.id  # 使用用户的 id
+        
     # 定义键盘
     keyboard = [
         return_keyboard,
