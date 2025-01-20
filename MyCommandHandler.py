@@ -36,7 +36,9 @@ async def command_bind(update: Update, context: ContextTypes.DEFAULT_TYPE):
         context.user_data['chat_id'] = update.message.chat.id  # 使用 chat.id 作为 chat_id
     if 'user_id' not in context.user_data:
         context.user_data['user_id'] = update.effective_user.id  # 使用用户的 id
-        
+    if 'verify_type' not in context.user_data:
+        context.user_data['verify_type'] = 'unknown'  # 默认值，或根据实际情况进行设置
+
     # 定义键盘
     keyboard = [
         return_keyboard,
